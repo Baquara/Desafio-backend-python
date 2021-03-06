@@ -1,3 +1,8 @@
+#Este é o código onde o projeto deverá ser executado. Ele não contém as rotas de API principais, que estão no arquivo api.py, porém contém as funções auxiliares que a API utiliza.
+
+
+#Estas são as dependências base que eu insiro em meus projetos de API utilizando framework Flask (Python).
+
 from flask import Flask, render_template, request, jsonify, abort
 import re
 import json
@@ -11,15 +16,25 @@ import datetime
 appflask = Flask(__name__)
 
 
+#Chama o código com as rotas de API, core do projeto.
+
 import api
 
 
+#Chave que pode ser usada para criptografar banco de dados ou utilizar session.
+
 appflask.secret_key = b'_8#azL"oyt4z\n\xec]/'
+
+
+#Declaração principal para o banco de dados. Estou usando a biblioteca SQLAlchemy, que é um ORM, é agnóstico em relação a quais tipos de banco de dados é possível utilizar.
+#Eu poderia ter utilizado qualquer outro tipo de banco de dados, mas optei pelo SQLite para fins de portabilidade.
 
 engine = create_engine('sqlite:///banco.db')
 engine.echo = False
 
 
+
+#Função auxiliar para limpar dados do banco de dados. A rota de API "resetarbd" utiliza essa função.
 
 def resetar_banco(session):
     meta = MetaData()
@@ -28,6 +43,8 @@ def resetar_banco(session):
         print ('Limpando tabela  %s' % table)
         session.execute(table.delete())
 
+#Função auxiliar para converter objetos do SQLAlchemy (tabelas/queries do banco) em um JSON manipulável.
+        
 def convertesql(sqlobj):
     d, a = {}, []
     for rowproxy in sqlobj:
@@ -38,7 +55,7 @@ def convertesql(sqlobj):
         return None
     return a
 
-
+#Função para verificar se ainda é possível votar em alguma pauta, pois compara o timestamp limite para a votação com o timestamp atual de quando o usuário decidiu votar.
 
 def validartempo(id_pauta):
     timestamp = engine.execute('SELECT tempo_timestamp FROM Pautas WHERE id='+str(id_pauta))
@@ -51,6 +68,8 @@ def validartempo(id_pauta):
     else:
         return True
 
+    
+#Função que verifica se o associado ainda tem condições de votar. Se ele não votou na pauta antes, o voto é válido, caso contrário, é inválido.
 
 def validarvoto(id_associado,id_pauta):
     resultado = engine.execute('SELECT * FROM Votos WHERE id_associado='+str(id_associado)+' AND id_pauta='+str(id_pauta))
@@ -60,6 +79,7 @@ def validarvoto(id_associado,id_pauta):
     else:
         return False
 
+#Função para localizar o ID do usuário (Associado) de acordo com o seu CPF. Se o CPF não existir entre os cadastrados, retorna 0.
 
 def localizar_id_por_cpf(cpf):
     resultado = engine.execute('SELECT id FROM Associados WHERE cpf=\''+str(cpf)+'\'')
@@ -69,6 +89,8 @@ def localizar_id_por_cpf(cpf):
     else:
         return resultado[0]["id"]
 
+    
+#Função auxiliar que determina se o associado com um determinado ID está cadastrado. É necessário para a rota de API que realiza o voto passando o ID do Associado.
 
 def associadoexiste(id):
     resultado = engine.execute('SELECT id FROM Associados WHERE id=\''+str(id)+'\'')
@@ -128,7 +150,7 @@ def validarcpf(cpf):
 
     return True
 
-
+#Executa a aplicação
 
 
 if __name__ == "__main__":
