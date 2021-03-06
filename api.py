@@ -1,6 +1,9 @@
+#Importando bibliotecas, declarações e variáveis do arquivo principal. Também usando um alias para a definição "app", pois cria ambiguidade quando se utiliza Flask e pode resultar em erros.
+
 from app import *
 import app as aplicacao
 
+#Rota para cadastrar pauta, recebendo em JSON o título da pauta e a sua duração em minutos. Por padrão, quando nenhum tempo é declarado, ele define a duração como 1 minuto.
 
 @appflask.route('/api/v1/cadastrarpauta', methods=['POST'])
 def cadastrarpauta():
@@ -15,6 +18,8 @@ def cadastrarpauta():
     return jsonify("Pauta cadastrada com sucesso!"), 201
 
 
+#Rota para cadastrar o associado, recebendo um JSON contendo os atributos nome e CPF. Se o CPF não for válido, retorna um erro.
+
 @appflask.route('/api/v1/cadastrarassociado', methods=['POST'])
 def cadastrarassociado():
     nome = request.json.get('nome', None)
@@ -26,6 +31,8 @@ def cadastrarassociado():
     except Exception as e:
         return jsonify("Erro ao cadastrar o(a) Associado(a)! Possivelmente o CPF já estiste no banco de dados. Erro: "+str(e)), 409
     return jsonify("Associado(a) cadastrado(a) com sucesso!"), 201
+
+#Rota para realizar o voto. Recebe o id da pauta, do associado, e o tipo de voto. Apenas votos "Sim" e "Não" serão considerados válidos.
 
 
 @appflask.route('/api/v1/votarpauta', methods=['POST'])
@@ -52,6 +59,7 @@ def votarpauta():
         return jsonify("Erro ao votar em pauta: "+str(e)), 409
     return jsonify("Voto computado com sucesso!"), 201
 
+#Rota que retorna todos os dados de uma pauta específica.
 
 @appflask.route('/api/v1/resultadopauta', methods=['GET'])
 def resultadopauta():
@@ -67,6 +75,7 @@ def resultadopauta():
         return jsonify("Não há resultados a serem exibidos."), 404
 
 
+#Rota que retorna todas as pautas, e os seus dados.
 
 @appflask.route('/api/v1/retornarpautas', methods=['GET'])
 def retornarpautas():
@@ -77,6 +86,10 @@ def retornarpautas():
         return jsonify("Erro ao consultar as pautas: "+str(e)), 404
     return jsonify(resultado), 200
 
+
+
+#Rota que retorna todos os associados cadastrados.
+
 @appflask.route('/api/v1/retornarassociados', methods=['GET'])
 def retornarassociados():
     try:
@@ -85,6 +98,8 @@ def retornarassociados():
     except Exception as e:
         return jsonify("Erro ao consultar as pautas: "+str(e)), 404
     return jsonify(resultado), 200
+
+#Rota que retorna todos os votos de todas as pautas.
 
 @appflask.route('/api/v1/retornarvotos', methods=['GET'])
 def retornarvotos():
@@ -95,6 +110,7 @@ def retornarvotos():
         return jsonify("Erro ao consultar as pautas: "+str(e)), 404
     return jsonify(resultado), 200
 
+#Rota que retorna se um associado com um dado CPF pode ou não votar (se o CPF dele é válido, e se está cadastrado)
 
 @appflask.route('/api/v1/users/<string:cpf>', methods=['GET'])
 def validarcpf(cpf):
@@ -107,7 +123,10 @@ def validarcpf(cpf):
     else:
         return jsonify({"status":"UNABLE_TO_VOTE"}), 404
 
-
+    
+#Rota para fins de debugging, que limpa o banco de dados, e o projeto pode ser executado em "clean state".
+    
+    
 @appflask.route('/api/v1/resetarbd', methods=["DELETE"])
 def resetarbd():
     try:
