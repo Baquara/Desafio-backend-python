@@ -11,7 +11,7 @@ https://documenter.getpostman.com/view/13068940/Tz5jefpE
 
 ## Dependências
 
-É necessário ter o Python 3 instalado no sistema, em seguida executar:
+É necessário ter o Python 3 instalado no sistema. Quando o repositório do projeto for clonado, deve-se executar:
 
 >pip install -r requirements.txt
 
