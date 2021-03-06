@@ -8,10 +8,16 @@ As rotas de API se encontram inteiramente documentadas na seguinte URL do Postma
 
 https://documenter.getpostman.com/view/13068940/Tz5jefpE
 
+## Arquitetura do Projeto
+
+Este projeto possui um código principal (app.py) onde as principais bibliotecas utilizadas são importadas bem como as funções auxiliares, um arquivo com o core do projeto contendo todas as rotas de API (api.py), e um arquivo com o banco de dados persistente (banco.py).
+
+Portanto, para o estudo da API em si, o principal arquivo é api.py.
+
 
 ## Dependências
 
-É necessário ter o Python 3 instalado no sistema, em seguida executar:
+É necessário ter o Python 3 instalado no sistema. Quando o repositório do projeto for clonado, deve-se executar:
 
 >pip install -r requirements.txt
 
@@ -24,7 +30,11 @@ Clonar o projeto:
 Em seguida,
 
 >cd Desafio-backend-python
+>
+>pip install -r requirements.txt
+>
 >export FLASK_APP=app.py
+>
 >flask run
 
 Por padrão a aplicação é executada em http://127.0.0.1:5000/ .
