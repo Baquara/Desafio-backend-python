@@ -14,6 +14,9 @@ Este projeto possui um código principal (app.py) onde as principais bibliotecas
 
 Portanto, para o estudo da API em si, o principal arquivo é api.py.
 
+Este projeto também conta com testes automatizados. Para executar os testes automatizados, no diretório principal e com a aplicação em execução, utilizar:
+
+>pytest testes_auto.py
 
 ## Dependências
 
@@ -49,3 +52,6 @@ https://documenter.getpostman.com/view/13068940/Tz5jefpE
 No diretório principal , está presente o arquivo testes_auto.py, que pode ser executado usando a biblioteca pytest. A API precisa estar em execução na máquina local (http://127.0.0.1:5000/) para que os testes sejam executados. 
 
 >pytest testes_auto.py
+
+
+
