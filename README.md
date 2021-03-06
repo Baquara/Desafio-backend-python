@@ -24,7 +24,9 @@ Clonar o projeto:
 Em seguida,
 
 >cd Desafio-backend-python
+>
 >export FLASK_APP=app.py
+>
 >flask run
 
 Por padrão a aplicação é executada em http://127.0.0.1:5000/ .
