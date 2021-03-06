@@ -8,6 +8,9 @@ As rotas de API se encontram inteiramente documentadas na seguinte URL do Postma
 
 https://documenter.getpostman.com/view/13068940/Tz5jefpE
 
+
+Também criei uma branch para uma versão dockerizada do projeto (em caráter experimental), porém recomendo realizar a configuração do environment de acordo com a branch principal.
+
 ## Arquitetura do Projeto
 
 Este projeto possui um código principal (app.py) onde as principais bibliotecas utilizadas são importadas bem como as funções auxiliares, um arquivo com o core do projeto contendo todas as rotas de API (api.py), e um arquivo com o banco de dados persistente (banco.py).
