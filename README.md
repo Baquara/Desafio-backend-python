@@ -11,6 +11,7 @@ https://documenter.getpostman.com/view/13068940/Tz5jefpE
 
 Também criei uma branch para uma versão dockerizada do projeto (em caráter experimental), porém recomendo realizar a configuração do environment de acordo com a branch principal.
 
+
 ## Arquitetura do Projeto
 
 Este projeto possui um código principal (app.py) onde as principais bibliotecas utilizadas são importadas bem como as funções auxiliares, um arquivo com o core do projeto contendo todas as rotas de API (api.py), e um arquivo com o banco de dados persistente (banco.py).
@@ -20,6 +21,8 @@ Portanto, para o estudo da API em si, o principal arquivo é api.py.
 Este projeto também conta com testes automatizados. Para executar os testes automatizados, no diretório principal e com a aplicação em execução, utilizar:
 
 >pytest testes_auto.py
+
+Conforme sinalizado no texto do desafio, para este projeto não foi incluído segurança nas rotas utilizando JWT, sendo assim as rotas estão em livre acesso para debugging.
 
 ## Dependências
 
